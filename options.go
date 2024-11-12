@@ -1,6 +1,10 @@
 package chromedpool
 
-import "time"
+import (
+	"time"
+
+	"github.com/chromedp/chromedp"
+)
 
 type Option func(*TabPool)
 
@@ -34,8 +38,8 @@ func WithWaitTimeout(waitTimeout time.Duration) Option {
 	}
 }
 
-func WithChromeFlags(flags ...string) Option {
+func WithChromeFlag(name string, value interface{}) Option {
 	return func(tp *TabPool) {
-		tp.chromeFlags = append(tp.chromeFlags, flags...)
+		tp.chromeFlags = append(tp.chromeFlags, chromedp.Flag(name, value))
 	}
 }

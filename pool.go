@@ -24,7 +24,12 @@ type TabPool struct {
 	userAgent   string
 	proxyURL    string
 	waitTimeout time.Duration
-	chromeFlags []string
+	chromeFlags []chromedp.ExecAllocatorOption
+}
+
+type ChromeFlag struct {
+	name  string
+	value interface{}
 }
 
 func NewTabPool(options ...Option) (*TabPool, error) {
@@ -54,7 +59,7 @@ func NewTabPool(options ...Option) (*TabPool, error) {
 		opts = append(opts, chromedp.ProxyServer(tp.proxyURL))
 	}
 	for _, flag := range tp.chromeFlags {
-		opts = append(opts, chromedp.Flag(flag, true))
+		opts = append(opts, flag)
 	}
 
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
