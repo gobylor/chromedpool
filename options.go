@@ -1,5 +1,7 @@
 package chromedpool
 
+import "time"
+
 type Option func(*TabPool)
 
 func WithMaxTabs(maxTabs int) Option {
@@ -23,6 +25,12 @@ func WithUserAgent(userAgent string) Option {
 func WithProxy(proxyURL string) Option {
 	return func(tp *TabPool) {
 		tp.proxyURL = proxyURL
+	}
+}
+
+func WithWaitTimeout(waitTimeout time.Duration) Option {
+	return func(tp *TabPool) {
+		tp.waitTimeout = waitTimeout
 	}
 }
 

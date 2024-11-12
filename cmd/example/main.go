@@ -26,11 +26,8 @@ func main() {
 		wg.Add(1)
 		go func(url string) {
 			defer wg.Done()
-			tab := pool.GetTab()
-			defer pool.PutTab(tab)
-			if err := tab.Navigate(url); err != nil {
+			if err := pool.Navigate(url); err != nil {
 				log.Printf("Error navigating to %s: %v", url, err)
-				return
 			}
 		}(urlPrefix + k)
 	}

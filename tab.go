@@ -11,6 +11,14 @@ type Tab struct {
 	cancel context.CancelFunc
 }
 
+func NewTab(ctx context.Context) *Tab {
+	ctx, cancel := chromedp.NewContext(ctx)
+	return &Tab{
+		ctx:    ctx,
+		cancel: cancel,
+	}
+}
+
 func (t *Tab) Run(actions ...chromedp.Action) error {
 	return chromedp.Run(t.ctx, actions...)
 }
